@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamOS • College Examination Hall Management System (OS Simulation)</title>
+  <meta name="description" content="College Examination Hall Management System simulated as an Operating System Resource Management model covering CO1 to CO5.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="bg-glow glow-3"></div>
+
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">ExamOS</span>
+          <span class="brand-badge">OS SIMULATION</span>
+        </div>
+      </div>
+
+      <div class="sidebar-status-box">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span class="status-text">Kernel Active</span>
+        </div>
+        <div class="status-meta" id="clock-display">--:--:--</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">MAIN WORKSPACE</div>
+        <button class="nav-item active" data-page="dashboard" id="nav-dashboard">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </span>
+          <span class="nav-label">Dashboard</span>
+          <span class="nav-tag badge-blue">Live</span>
+        </button>
+
+        <button class="nav-item" data-page="schedule" id="nav-schedule">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </span>
+          <span class="nav-label">Seating Matrix & Halls</span>
+        </button>
+
+        <button class="nav-item" data-page="processes" id="nav-processes">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </span>
+          <span class="nav-label">Student Processes</span>
+          <span class="nav-tag badge-cyan">12 PCB</span>
+        </button>
+
+        <button class="nav-item" data-page="threads" id="nav-threads">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </span>
+          <span class="nav-label">Invigilator Threads</span>
+          <span class="nav-tag badge-purple">4 TCB</span>
+        </button>
+
+        <div class="nav-group-title">OS COURSE OUTCOMES (CO)</div>
+        <button class="nav-item" data-page="co1" id="nav-co1">
+          <span class="nav-co-pill">CO1</span>
+          <span class="nav-label">Batch Processing Pipeline</span>
+        </button>
+
+        <button class="nav-item" data-page="co2" id="nav-co2">
+          <span class="nav-co-pill">CO2</span>
+          <span class="nav-label">Concurrency & Threads</span>
+        </button>
+
+        <button class="nav-item" data-page="co3" id="nav-co3">
+          <span class="nav-co-pill">CO3</span>
+          <span class="nav-label">FCFS, Priority & Deadlock</span>
+        </button>
+
+        <button class="nav-item" data-page="co4" id="nav-co4">
+          <span class="nav-co-pill">CO4</span>
+          <span class="nav-label">Memory Pages & LRU</span>
+        </button>
+
+        <button class="nav-item" data-page="co5" id="nav-co5">
+          <span class="nav-co-pill">CO5</span>
+          <span class="nav-label">File Blocks & Tree Dir</span>
+        </button>
+
+        <div class="nav-group-title">TOOLS & LAB SUBMISSION</div>
+        <button class="nav-item" data-page="report" id="nav-report">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </span>
+          <span class="nav-label">Full OS Lab Report</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="footer-meta">
+          <span class="meta-title">SPPU / College OS Lab</span>
+          <span class="meta-sub">OS Resource Management Demo</span>
+        </div>
+        <div class="footer-action">
+          <button class="btn-icon" id="theme-toggle" title="Toggle Dark/Light Mode">
+            <span class="icon-sun">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </span>
+            <span class="icon-moon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+      <!-- HEADER / APP BAR -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="btn-icon mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div>
+            <div class="header-breadcrumb">
+              <span>ExamOS Management</span> <span class="sep">/</span> <span id="current-crumb">Dashboard</span>
+            </div>
+            <h1 class="header-title" id="page-title">Executive Dashboard</h1>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="search-bar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="global-search" placeholder="Search student, PID, hall, thread...">
+          </div>
+
+          <button class="btn btn-outline" id="btn-quick-reset" title="Reset all simulation states">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            <span>Reset</span>
+          </button>
+
+          <button class="btn btn-primary" id="btn-run-batch-quick">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Run All Modules</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW CONTAINER -->
+      <div class="view-wrapper" id="view-container">
+
+        <!-- ==============================================
+             PAGE: DASHBOARD
+             ============================================== -->
+        <section class="page-view active" id="view-dashboard">
+          <!-- Hero Banner -->
+          <div class="hero-card">
+            <div class="hero-content">
+              <div class="hero-tag">OPERATING SYSTEM LAB SIMULATION</div>
+              <h2 class="hero-headline">Exam Hall Management & Resource Allocation Kernel</h2>
+              <p class="hero-description">
+                A complete OS-mapped simulation where Students act as <strong>Processes</strong>, Invigilators act as concurrent <strong>Threads</strong>, Exam Halls are scheduled via <strong>FCFS</strong>, Invigilator dispatch is governed by <strong>Priority Scheduling</strong>, Seating Plans are indexed into <strong>Virtual Memory Pages with LRU replacement</strong>, and reports reside in a <strong>Contiguous Disk Block Hierarchy</strong>.
+              </p>
+              <div class="hero-actions">
+                <button class="btn btn-glow" onclick="navigateTo('schedule')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  Interactive Seating Plan
+                </button>
+                <button class="btn btn-secondary" onclick="navigateTo('co3')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  Inspect Deadlock RAG Graph
+                </button>
+                <button class="btn btn-secondary" onclick="navigateTo('co4')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                  Run LRU Page Replacement
+                </button>
+              </div>
+            </div>
+            <div class="hero-stats-panel">
+              <div class="hero-stat-badge">
+                <span class="stat-meta">Active Session</span>
+                <span class="stat-highlight">Semester 4 Final</span>
+              </div>
+              <div class="hero-stat-badge">
+                <span class="stat-meta">Simulated Time</span>
+                <span class="stat-highlight">3.00 Hours</span>
+              </div>
+              <div class="hero-stat-badge">
+                <span class="stat-meta">OS Architecture</span>
+                <span class="stat-highlight">Batch / Preemptive</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="stats-row">
+            <div class="stat-card stat-blue">
+              <div class="stat-icon-wrapper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">Student Processes</span>
+                <div class="stat-number-row">
+                  <span class="stat-number" id="dash-student-count">12</span>
+                  <span class="stat-badge badge-green">P101–P112</span>
+                </div>
+                <span class="stat-sub">Each student allocated a PCB entry</span>
+              </div>
+            </div>
+
+            <div class="stat-card stat-green">
+              <div class="stat-icon-wrapper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">Examination Halls</span>
+                <div class="stat-number-row">
+                  <span class="stat-number">4</span>
+                  <span class="stat-badge badge-blue">H1, H2, H3, H4</span>
+                </div>
+                <span class="stat-sub">FCFS Resource Queuing System</span>
+              </div>
+            </div>
+
+            <div class="stat-card stat-purple">
+              <div class="stat-icon-wrapper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">Invigilator Threads</span>
+                <div class="stat-number-row">
+                  <span class="stat-number" id="dash-thread-count">4</span>
+                  <span class="stat-badge badge-purple">I1–I4 (Threads)</span>
+                </div>
+                <span class="stat-sub">Concurrent supervising workers</span>
+              </div>
+            </div>
+
+            <div class="stat-card stat-orange">
+              <div class="stat-icon-wrapper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+              </div>
+              <div class="stat-content">
+                <span class="stat-label">RAM Memory Cache</span>
+                <div class="stat-number-row">
+                  <span class="stat-number">3</span>
+                  <span class="stat-badge badge-orange">Active Frames</span>
+                </div>
+                <span class="stat-sub">Least Recently Used (LRU) Paging</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mid Dashboard Section: Halls Live Grid & Batch Process Tracker -->
+          <div class="dash-grid-two">
+            <!-- Active Examination Halls -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Live Examination Halls Status</h3>
+                  <p class="card-subtitle">Real-time resource allocation and invigilator thread mapping</p>
+                </div>
+                <button class="btn btn-sm btn-outline" onclick="navigateTo('schedule')">Full Plan →</button>
+              </div>
+              <div class="card-body">
+                <div class="halls-preview-grid" id="dash-halls-grid">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Batch Pipeline Interactive Progress -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Batch Processing Execution Flow</h3>
+                  <p class="card-subtitle">Sequential OS pipeline stages (CO1 - System Model)</p>
+                </div>
+                <button class="btn btn-sm btn-primary" onclick="navigateTo('co1')">Interactive Run</button>
+              </div>
+              <div class="card-body">
+                <div class="pipeline-track">
+                  <div class="pipeline-step completed">
+                    <div class="step-circle">1</div>
+                    <div class="step-info">
+                      <span class="step-name">Load Student Data</span>
+                      <span class="step-meta">12 PCB entities generated</span>
+                    </div>
+                  </div>
+                  <div class="pipeline-step completed">
+                    <div class="step-circle">2</div>
+                    <div class="step-info">
+                      <span class="step-name">FCFS Hall Allocation</span>
+                      <span class="step-meta">R1→H1, R2→H2, R3→H3, R4→H4</span>
+                    </div>
+                  </div>
+                  <div class="pipeline-step completed">
+                    <div class="step-circle">3</div>
+                    <div class="step-info">
+                      <span class="step-name">Assign Invigilators</span>
+                      <span class="step-meta">Priority-driven supervisor dispatch</span>
+                    </div>
+                  </div>
+                  <div class="pipeline-step active">
+                    <div class="step-circle">4</div>
+                    <div class="step-info">
+                      <span class="step-name">Virtual Seating Paging</span>
+                      <span class="step-meta">Paging table & LRU replacement</span>
+                    </div>
+                  </div>
+                  <div class="pipeline-step">
+                    <div class="step-circle">5</div>
+                    <div class="step-info">
+                      <span class="step-name">File Allocation & Directory</span>
+                      <span class="step-meta">Contiguous disk block mapping</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Console / Live Kernel Event Log -->
+          <div class="card terminal-card">
+            <div class="card-header terminal-header">
+              <div class="terminal-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+                <span class="terminal-title">OS Kernel Event Log (Live Stream)</span>
+              </div>
+              <div class="terminal-actions">
+                <button class="btn btn-xs btn-outline" id="btn-clear-log">Clear</button>
+                <button class="btn btn-xs btn-outline" id="btn-copy-log">Copy</button>
+              </div>
+            </div>
+            <div class="card-body terminal-body" id="system-log-terminal">
+              <!-- Terminal logs populated dynamically -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: SCHEDULE & SEATING MATRIX
+             ============================================== -->
+        <section class="page-view" id="view-schedule">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">Examination Seating Matrix & Hall Plans</h2>
+              <p class="section-desc">Interactive desk-level mapping of student processes to examination halls and seats</p>
+            </div>
+            <div class="filter-controls">
+              <div class="segmented-control" id="hall-filter-group">
+                <button class="seg-btn active" data-filter="all">All Halls</button>
+                <button class="seg-btn" data-filter="H1">Hall 1 (Computer)</button>
+                <button class="seg-btn" data-filter="H2">Hall 2 (IT)</button>
+                <button class="seg-btn" data-filter="H3">Hall 3 (Mech)</button>
+                <button class="seg-btn" data-filter="H4">Hall 4 (Civil)</button>
+              </div>
+              <button class="btn btn-outline" id="btn-export-seating">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Visual Classroom Layout Cards -->
+          <div class="classroom-grid" id="classroom-grid">
+            <!-- Dynamically populated classrooms with podium & interactive student desks -->
+          </div>
+
+          <!-- Comprehensive Seating Register Table -->
+          <div class="card mt-24">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Master Seating Register</h3>
+                <p class="card-subtitle">Full student process scheduling table</p>
+              </div>
+              <div class="table-search">
+                <input type="text" id="seating-table-search" placeholder="Filter by Name, Hall, Seat...">
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table" id="seating-table">
+                  <thead>
+                    <tr>
+                      <th>Process ID</th>
+                      <th>Student Candidate</th>
+                      <th>Department</th>
+                      <th>Assigned Hall</th>
+                      <th>Seat Number</th>
+                      <th>Memory Page</th>
+                      <th>Disk Blocks</th>
+                      <th>Process State</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="seating-table-body">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: STUDENT PROCESSES (CO2)
+             ============================================== -->
+        <section class="page-view" id="view-processes">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">Student Process Control Blocks (PCB)</h2>
+              <p class="section-desc">CO2 Concept: Every student's examination session is abstracted as an independent operating system process</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-outline" id="btn-advance-processes">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Simulate State Transition (Ready → Running → Finished)
+              </button>
+            </div>
+          </div>
+
+          <!-- Process State Cards Overview -->
+          <div class="process-state-counts">
+            <div class="state-pill state-ready active">
+              <span class="pill-dot"></span>
+              <span class="pill-title">READY State:</span>
+              <span class="pill-count" id="count-ready">12</span>
+            </div>
+            <div class="state-pill state-running">
+              <span class="pill-dot"></span>
+              <span class="pill-title">RUNNING State:</span>
+              <span class="pill-count" id="count-running">0</span>
+            </div>
+            <div class="state-pill state-completed">
+              <span class="pill-dot"></span>
+              <span class="pill-title">COMPLETED State:</span>
+              <span class="pill-count" id="count-completed">0</span>
+            </div>
+          </div>
+
+          <!-- Detailed Process Table -->
+          <div class="card mt-16">
+            <div class="card-header">
+              <h3 class="card-title">Process Control Block (PCB) Registry</h3>
+              <span class="badge badge-blue">12 Processes Active</span>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>PID</th>
+                      <th>Student Candidate</th>
+                      <th>Department</th>
+                      <th>Exam Hall</th>
+                      <th>Assigned Seat</th>
+                      <th>CPU Burst Time</th>
+                      <th>Priority</th>
+                      <th>Process State</th>
+                      <th>Controls</th>
+                    </tr>
+                  </thead>
+                  <tbody id="process-pcb-table-body">
+                    <!-- Dynamic -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- OS Concept Explainer Card -->
+          <div class="concept-callout mt-24">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body">
+              <h4 class="callout-title">OS Concept Mapping: Process Management (CO2)</h4>
+              <p>
+                In an operating system, a <strong>Process</strong> is a program in execution. Here, each student attending the 3-hour examination is mapped to a process holding resources (Desk/Seat, Question Paper, Hall). The Process Control Block (PCB) stores state information: <code>Process ID</code>, <code>Student Name</code>, <code>Memory Reference</code>, and <code>Scheduling State</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: INVIGILATOR THREADS (CO2)
+             ============================================== -->
+        <section class="page-view" id="view-threads">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">Invigilator Multithreading Engine</h2>
+              <p class="section-desc">CO2 Concept: Invigilators modeled as concurrent worker threads executing parallel supervision routines</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-primary" id="btn-start-threads">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Start All 4 Threads
+              </button>
+              <button class="btn btn-outline" id="btn-reset-threads">Reset Threads</button>
+            </div>
+          </div>
+
+          <!-- Thread Monitor Cards -->
+          <div class="thread-cards-grid" id="threads-grid">
+            <!-- Dynamic thread visualizers with real-time progress & status -->
+          </div>
+
+          <!-- Thread Execution Terminal -->
+          <div class="card mt-24">
+            <div class="card-header">
+              <h3 class="card-title">Thread Concurrency Log & Mutex Lock Status</h3>
+              <span class="badge badge-purple" id="thread-overall-status">Status: Waiting to launch</span>
+            </div>
+            <div class="card-body">
+              <div class="terminal-body mini-term" id="thread-log-stream">
+                <!-- Log messages -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: CO1 - BATCH PROCESSING
+             ============================================== -->
+        <section class="page-view" id="view-co1">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">CO1 • System Information & Batch Processing</h2>
+              <p class="section-desc">Modeling the College Examination Event as a Batch Processing Operating System</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-primary" id="btn-co1-run-batch">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Step Through Batch (1→5)
+              </button>
+              <button class="btn btn-outline" id="btn-co1-reset">Reset Pipeline</button>
+            </div>
+          </div>
+
+          <!-- System Parameters Grid -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">System Specification & Batch Parameters</h3>
+              <span class="badge badge-blue">Batch System</span>
+            </div>
+            <div class="card-body">
+              <div class="info-grid">
+                <div class="info-cell">
+                  <span class="info-label">OS Architecture</span>
+                  <span class="info-val">Batch Processing Model</span>
+                </div>
+                <div class="info-cell">
+                  <span class="info-label">Total Exam Halls</span>
+                  <span class="info-val">4 Halls (H1, H2, H3, H4)</span>
+                </div>
+                <div class="info-cell">
+                  <span class="info-label">Total Student Processes</span>
+                  <span class="info-val">12 Students (3 per dept)</span>
+                </div>
+                <div class="info-cell">
+                  <span class="info-label">Invigilator Threads</span>
+                  <span class="info-val">4 Concurrent Workers (I1–I4)</span>
+                </div>
+                <div class="info-cell">
+                  <span class="info-label">Academic Departments</span>
+                  <span class="info-val">Computer, IT, Mech, Civil</span>
+                </div>
+                <div class="info-cell">
+                  <span class="info-label">Session Duration</span>
+                  <span class="info-val">3 Hours (Batch Execution)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step-by-Step Interactive Batch Pipeline -->
+          <div class="card mt-24">
+            <div class="card-header">
+              <h3 class="card-title">Interactive Batch Pipeline Simulation</h3>
+              <span class="badge badge-green" id="batch-step-indicator">Stage 0 / 5</span>
+            </div>
+            <div class="card-body">
+              <div class="pipeline-visual-steps" id="co1-pipeline-steps">
+                <!-- 5 Steps dynamically animated -->
+              </div>
+
+              <div class="batch-execution-console mt-24">
+                <div class="console-title">Stage Execution Output:</div>
+                <div class="console-box" id="co1-stage-details">
+                  Click <strong>"Step Through Batch"</strong> to simulate sequential batch execution of student data ingestion, hall scheduling, supervisor assignment, virtual paging, and disk persistence.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: CO2 - PROCESSES & THREADS
+             ============================================== -->
+        <section class="page-view" id="view-co2">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">CO2 • Process Management & Multithreading</h2>
+              <p class="section-desc">Dual view of Student Processes (PCBs) and Invigilator Threads (TCBs)</p>
+            </div>
+          </div>
+
+          <div class="tabs-container">
+            <div class="tabs-nav">
+              <button class="tab-btn active" data-tab="co2-students">1. Student Processes (12)</button>
+              <button class="tab-btn" data-tab="co2-invigilators">2. Invigilator Threads (4)</button>
+            </div>
+
+            <div class="tab-pane active" id="tab-co2-students">
+              <div class="card">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>PID</th>
+                          <th>Student</th>
+                          <th>Department</th>
+                          <th>Hall</th>
+                          <th>Seat</th>
+                          <th>State</th>
+                        </tr>
+                      </thead>
+                      <tbody id="co2-student-table-body">
+                        <!-- Populated dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="tab-co2-invigilators">
+              <div class="card">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>Thread ID</th>
+                          <th>Invigilator</th>
+                          <th>Priority Level</th>
+                          <th>Supervised Hall</th>
+                          <th>Thread Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="co2-threads-table-body">
+                        <!-- Populated dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: CO3 - SCHEDULING & DEADLOCK
+             ============================================== -->
+        <section class="page-view" id="view-co3">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">CO3 • Scheduling Algorithms & Deadlock Detection</h2>
+              <p class="section-desc">FCFS Hall Scheduling, Priority Invigilator Allocation, and Circular Wait Resource Allocation Graph</p>
+            </div>
+          </div>
+
+          <div class="tabs-container">
+            <div class="tabs-nav">
+              <button class="tab-btn active" data-tab="co3-fcfs">1. FCFS Hall Allocation</button>
+              <button class="tab-btn" data-tab="co3-priority">2. Priority Invigilator Allocation</button>
+              <button class="tab-btn" data-tab="co3-deadlock">3. Deadlock Detection (RAG Graph)</button>
+            </div>
+
+            <!-- TAB 1: FCFS -->
+            <div class="tab-pane active" id="tab-co3-fcfs">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">First-Come, First-Served (FCFS) Hall Scheduling</h3>
+                    <p class="card-subtitle">Departments queue for hall allocation in order of arrival</p>
+                  </div>
+                  <span class="badge badge-blue">FCFS Algorithm</span>
+                </div>
+                <div class="card-body">
+                  <div class="gantt-chart-wrapper mb-24">
+                    <div class="gantt-title">FCFS Hall Arrival Timeline</div>
+                    <div class="gantt-timeline">
+                      <div class="gantt-bar gantt-blue" style="width: 25%;">
+                        <span class="bar-title">R1 • Computer Dept</span>
+                        <span class="bar-alloc">→ Hall 1</span>
+                      </div>
+                      <div class="gantt-bar gantt-cyan" style="width: 25%;">
+                        <span class="bar-title">R2 • IT Dept</span>
+                        <span class="bar-alloc">→ Hall 2</span>
+                      </div>
+                      <div class="gantt-bar gantt-purple" style="width: 25%;">
+                        <span class="bar-title">R3 • Mech Dept</span>
+                        <span class="bar-alloc">→ Hall 3</span>
+                      </div>
+                      <div class="gantt-bar gantt-green" style="width: 25%;">
+                        <span class="bar-title">R4 • Civil Dept</span>
+                        <span class="bar-alloc">→ Hall 4</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>Request #</th>
+                          <th>Department</th>
+                          <th>Allocated Hall</th>
+                          <th>Students</th>
+                          <th>Arrival Time</th>
+                          <th>Queue Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="fcfs-table-body">
+                        <!-- Populated dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: PRIORITY -->
+            <div class="tab-pane" id="tab-co3-priority">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">Priority Scheduling for Invigilators</h3>
+                    <p class="card-subtitle">Lower priority number indicates higher scheduling priority</p>
+                  </div>
+                  <span class="badge badge-purple">Priority Queue</span>
+                </div>
+                <div class="card-body">
+                  <div class="priority-queue-visual mb-24" id="priority-queue-visual">
+                    <!-- Cards showing sorted priority queue -->
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>Invigilator Name</th>
+                          <th>Thread ID</th>
+                          <th>Priority Rank</th>
+                          <th>Assigned Hall</th>
+                          <th>Evaluation</th>
+                        </tr>
+                      </thead>
+                      <tbody id="priority-table-body">
+                        <!-- Populated dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 3: DEADLOCK -->
+            <div class="tab-pane" id="tab-co3-deadlock">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">Resource Allocation Graph (RAG) & Deadlock Monitor</h3>
+                    <p class="card-subtitle">Circular-wait condition detection: I1 → Projector → I2 → H1 → I1</p>
+                  </div>
+                  <div class="header-actions">
+                    <button class="btn btn-danger" id="btn-detect-deadlock">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                      Run Cycle Detection
+                    </button>
+                    <button class="btn btn-outline" id="btn-toggle-deadlock-fix">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <span id="fix-btn-label">Resolve Deadlock (Add Projector #2)</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <!-- Visual Interactive SVG Graph -->
+                  <div class="rag-graph-container" id="rag-graph-wrapper">
+                    <svg id="rag-svg" viewBox="0 0 800 340" class="rag-svg">
+                      <!-- Markers -->
+                      <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-blue)" />
+                        </marker>
+                        <marker id="arrow-danger" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent-red)" />
+                        </marker>
+                      </defs>
+
+                      <!-- Edges with dynamic classes -->
+                      <!-- I1 -> Projector (Request Edge) -->
+                      <path id="edge-1" class="rag-edge" d="M 170 170 C 260 90, 340 90, 430 140" marker-end="url(#arrow)" />
+                      <!-- Projector -> I2 (Assignment Edge) -->
+                      <path id="edge-2" class="rag-edge" d="M 470 140 C 530 120, 580 130, 630 170" marker-end="url(#arrow)" />
+                      <!-- I2 -> H1 (Request Edge) -->
+                      <path id="edge-3" class="rag-edge" d="M 630 190 C 550 270, 470 270, 370 240" marker-end="url(#arrow)" />
+                      <!-- H1 -> I1 (Assignment Edge) -->
+                      <path id="edge-4" class="rag-edge" d="M 330 240 C 260 250, 200 230, 170 190" marker-end="url(#arrow)" />
+
+                      <!-- Nodes -->
+                      <!-- Process Node 1: I1 -->
+                      <g class="rag-node process-node" id="node-i1" transform="translate(130, 170)">
+                        <circle r="42" fill="var(--surface-color)" stroke="var(--accent-purple)" stroke-width="3" />
+                        <text y="-5" text-anchor="middle" fill="var(--text-color)" font-weight="700" font-size="14">I1</text>
+                        <text y="15" text-anchor="middle" fill="var(--text-muted)" font-size="11">Invigilator</text>
+                      </g>
+
+                      <!-- Resource Node 1: Projector -->
+                      <g class="rag-node resource-node" id="node-proj" transform="translate(450, 130)">
+                        <rect x="-48" y="-35" width="96" height="70" rx="8" fill="var(--surface-color)" stroke="var(--accent-orange)" stroke-width="3" />
+                        <text y="-5" text-anchor="middle" fill="var(--text-color)" font-weight="700" font-size="13">PROJECTOR</text>
+                        <text y="15" text-anchor="middle" fill="var(--accent-orange)" font-size="11">Resource R1</text>
+                      </g>
+
+                      <!-- Process Node 2: I2 -->
+                      <g class="rag-node process-node" id="node-i2" transform="translate(670, 170)">
+                        <circle r="42" fill="var(--surface-color)" stroke="var(--accent-purple)" stroke-width="3" />
+                        <text y="-5" text-anchor="middle" fill="var(--text-color)" font-weight="700" font-size="14">I2</text>
+                        <text y="15" text-anchor="middle" fill="var(--text-muted)" font-size="11">Invigilator</text>
+                      </g>
+
+                      <!-- Resource Node 2: Hall H1 -->
+                      <g class="rag-node resource-node" id="node-h1" transform="translate(350, 240)">
+                        <rect x="-48" y="-35" width="96" height="70" rx="8" fill="var(--surface-color)" stroke="var(--accent-blue)" stroke-width="3" />
+                        <text y="-5" text-anchor="middle" fill="var(--text-color)" font-weight="700" font-size="13">HALL H1</text>
+                        <text y="15" text-anchor="middle" fill="var(--accent-blue)" font-size="11">Resource R2</text>
+                      </g>
+
+                      <!-- Edge Labels -->
+                      <text x="280" y="90" fill="var(--text-muted)" font-size="11" font-family="JetBrains Mono">Requests →</text>
+                      <text x="540" y="115" fill="var(--text-muted)" font-size="11" font-family="JetBrains Mono">Held by →</text>
+                      <text x="510" y="275" fill="var(--text-muted)" font-size="11" font-family="JetBrains Mono">← Requests</text>
+                      <text x="210" y="250" fill="var(--text-muted)" font-size="11" font-family="JetBrains Mono">← Held by</text>
+                    </svg>
+                  </div>
+
+                  <!-- Deadlock Status Output Box -->
+                  <div class="deadlock-alert mt-16" id="deadlock-alert-box">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                      <div class="alert-title" id="deadlock-title">Deadlock Cycle Status: Initialized</div>
+                      <div class="alert-text" id="deadlock-desc">Click "Run Cycle Detection" to initiate DFS traversal on the Resource Allocation Graph.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: CO4 - MEMORY & LRU
+             ============================================== -->
+        <section class="page-view" id="view-co4">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">CO4 • Memory Management & LRU Page Replacement</h2>
+              <p class="section-desc">Modeling Seating Plans as Memory Pages & Simulating Least Recently Used (LRU) Frame Swapping</p>
+            </div>
+          </div>
+
+          <div class="tabs-container">
+            <div class="tabs-nav">
+              <button class="tab-btn active" data-tab="co4-paging">1. Seating Plan Paging Model</button>
+              <button class="tab-btn" data-tab="co4-lru">2. Interactive LRU Page Replacement</button>
+            </div>
+
+            <!-- TAB 1: PAGING -->
+            <div class="tab-pane active" id="tab-co4-paging">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Virtual Seating Page Allocation</h3>
+                  <span class="badge badge-orange">Page Table</span>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>Hall</th>
+                          <th>Page 1 (Seats 1–10)</th>
+                          <th>Page 2 (Seats 11–20)</th>
+                          <th>Page 3 (Seats 21–30)</th>
+                          <th>Total Hall Capacity</th>
+                          <th>Paging State</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>Hall H1 (Computer)</strong></td>
+                          <td><code>H1-P1</code> (Active)</td>
+                          <td><code>H1-P2</code></td>
+                          <td><code>H1-P3</code></td>
+                          <td>30 Desks</td>
+                          <td><span class="badge badge-green">Paged in Memory</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Hall H2 (IT)</strong></td>
+                          <td><code>H2-P1</code> (Active)</td>
+                          <td><code>H2-P2</code></td>
+                          <td><code>H2-P3</code></td>
+                          <td>30 Desks</td>
+                          <td><span class="badge badge-green">Paged in Memory</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Hall H3 (Mech)</strong></td>
+                          <td><code>H3-P1</code> (Active)</td>
+                          <td><code>H3-P2</code></td>
+                          <td><code>H3-P3</code></td>
+                          <td>30 Desks</td>
+                          <td><span class="badge badge-green">Paged in Memory</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Hall H4 (Civil)</strong></td>
+                          <td><code>H4-P1</code> (Active)</td>
+                          <td><code>H4-P2</code></td>
+                          <td><code>H4-P3</code></td>
+                          <td>30 Desks</td>
+                          <td><span class="badge badge-green">Paged in Memory</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: LRU SIMULATOR -->
+            <div class="tab-pane" id="tab-co4-lru">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">LRU Page Replacement Interactive Simulator</h3>
+                    <p class="card-subtitle">Observe page hits, faults, and frame evictions in real-time</p>
+                  </div>
+                  <div class="header-actions">
+                    <button class="btn btn-outline" id="btn-step-lru">Step Next</button>
+                    <button class="btn btn-primary" id="btn-run-all-lru">Simulate All</button>
+                    <button class="btn btn-outline" id="btn-reset-lru">Reset</button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <!-- Configuration row -->
+                  <div class="lru-config-bar mb-24">
+                    <div class="input-group">
+                      <label for="lru-ref-input">Page Reference String:</label>
+                      <input type="text" id="lru-ref-input" value="H1-P1, H2-P1, H3-P1, H1-P2, H4-P1, H2-P1">
+                    </div>
+                    <div class="input-group-fixed">
+                      <label>Physical Frames:</label>
+                      <span class="badge badge-orange font-mono">3 Frames</span>
+                    </div>
+                  </div>
+
+                  <!-- Live RAM Frame Visualization -->
+                  <div class="ram-frames-display mb-24">
+                    <div class="ram-title">Active Physical Memory Frames (RAM):</div>
+                    <div class="frames-boxes" id="ram-frames-boxes">
+                      <div class="frame-box" id="frame-0">
+                        <span class="frame-idx">Frame 0</span>
+                        <span class="frame-val empty">[Empty]</span>
+                      </div>
+                      <div class="frame-box" id="frame-1">
+                        <span class="frame-idx">Frame 1</span>
+                        <span class="frame-val empty">[Empty]</span>
+                      </div>
+                      <div class="frame-box" id="frame-2">
+                        <span class="frame-idx">Frame 2</span>
+                        <span class="frame-val empty">[Empty]</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Stat chips -->
+                  <div class="lru-stats-bar mb-24">
+                    <div class="lru-stat-chip">
+                      <span class="chip-label">Total Requests:</span>
+                      <span class="chip-val" id="lru-stat-total">0</span>
+                    </div>
+                    <div class="lru-stat-chip text-red">
+                      <span class="chip-label">Page Faults:</span>
+                      <span class="chip-val" id="lru-stat-faults">0</span>
+                    </div>
+                    <div class="lru-stat-chip text-green">
+                      <span class="chip-label">Page Hits:</span>
+                      <span class="chip-val" id="lru-stat-hits">0</span>
+                    </div>
+                    <div class="lru-stat-chip text-blue">
+                      <span class="chip-label">Hit Ratio:</span>
+                      <span class="chip-val" id="lru-stat-ratio">0%</span>
+                    </div>
+                  </div>
+
+                  <!-- History Table -->
+                  <div class="table-responsive">
+                    <table class="data-table" id="lru-results-table">
+                      <thead>
+                        <tr>
+                          <th>Step #</th>
+                          <th>Referenced Page</th>
+                          <th>Action / Memory Event</th>
+                          <th>Frames in RAM</th>
+                          <th>Result</th>
+                        </tr>
+                      </thead>
+                      <tbody id="lru-results-body">
+                        <!-- Populated dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: CO5 - FILES & TREE DIRECTORY
+             ============================================== -->
+        <section class="page-view" id="view-co5">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">CO5 • Storage Management & Directory Structure</h2>
+              <p class="section-desc">Contiguous File Allocation on Secondary Disk Blocks & Hierarchical Tree Directory</p>
+            </div>
+          </div>
+
+          <div class="tabs-container">
+            <div class="tabs-nav">
+              <button class="tab-btn active" data-tab="co5-disk">1. Contiguous Disk Allocation (60 Blocks)</button>
+              <button class="tab-btn" data-tab="co5-tree">2. Hierarchical Tree Directory</button>
+            </div>
+
+            <!-- TAB 1: CONTIGUOUS BLOCKS -->
+            <div class="tab-pane active" id="tab-co5-disk">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">Secondary Storage Disk Block Visualization (60 Blocks)</h3>
+                    <p class="card-subtitle">Contiguous allocation allocates consecutive physical blocks to exam files</p>
+                  </div>
+                  <span class="badge badge-green">Contiguous Allocation</span>
+                </div>
+                <div class="card-body">
+                  <!-- File Legend -->
+                  <div class="disk-legend mb-20">
+                    <div class="legend-item"><span class="legend-color block-free"></span> Free Space</div>
+                    <div class="legend-item"><span class="legend-color block-f1"></span> Computer_H1 (Blocks 10–14)</div>
+                    <div class="legend-item"><span class="legend-color block-f2"></span> IT_H2 (Blocks 20–23)</div>
+                    <div class="legend-item"><span class="legend-color block-f3"></span> Mech_H3 (Blocks 30–35)</div>
+                    <div class="legend-item"><span class="legend-color block-f4"></span> Civil_H4 (Blocks 40–44)</div>
+                  </div>
+
+                  <!-- 60 Disk Block Interactive Grid -->
+                  <div class="disk-blocks-grid" id="disk-grid">
+                    <!-- Populated dynamically (0 to 59) -->
+                  </div>
+
+                  <div class="block-inspect-bar mt-20" id="block-inspector">
+                    Hover over or click any disk block above to inspect physical allocation address and file owner.
+                  </div>
+
+                  <!-- File Allocation Table -->
+                  <div class="table-responsive mt-24">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>File Identifier</th>
+                          <th>Department / Hall</th>
+                          <th>Start Block</th>
+                          <th>Length (Blocks)</th>
+                          <th>Allocated Block Range</th>
+                          <th>Access Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>Computer_H1_Seating.txt</code></td>
+                          <td>Computer / Hall 1</td>
+                          <td>10</td>
+                          <td>5</td>
+                          <td><code>[10, 11, 12, 13, 14]</code></td>
+                          <td><span class="badge badge-green">O(1) Direct Access</span></td>
+                        </tr>
+                        <tr>
+                          <td><code>IT_H2_Seating.txt</code></td>
+                          <td>IT / Hall 2</td>
+                          <td>20</td>
+                          <td>4</td>
+                          <td><code>[20, 21, 22, 23]</code></td>
+                          <td><span class="badge badge-green">O(1) Direct Access</span></td>
+                        </tr>
+                        <tr>
+                          <td><code>Mechanical_H3_Seating.txt</code></td>
+                          <td>Mechanical / Hall 3</td>
+                          <td>30</td>
+                          <td>6</td>
+                          <td><code>[30, 31, 32, 33, 34, 35]</code></td>
+                          <td><span class="badge badge-green">O(1) Direct Access</span></td>
+                        </tr>
+                        <tr>
+                          <td><code>Civil_H4_Seating.txt</code></td>
+                          <td>Civil / Hall 4</td>
+                          <td>40</td>
+                          <td>5</td>
+                          <td><code>[40, 41, 42, 43, 44]</code></td>
+                          <td><span class="badge badge-green">O(1) Direct Access</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: TREE DIRECTORY -->
+            <div class="tab-pane" id="tab-co5-tree">
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">Tree-Structured Examination Directory</h3>
+                    <p class="card-subtitle">Hierarchical file organization by department and semester</p>
+                  </div>
+                  <span class="badge badge-blue">Tree Directory</span>
+                </div>
+                <div class="card-body">
+                  <div class="tree-explorer-layout">
+                    <!-- Tree View List -->
+                    <div class="tree-sidebar" id="tree-nav">
+                      <!-- Tree hierarchy -->
+                    </div>
+
+                    <!-- File Content Previewer -->
+                    <div class="file-previewer">
+                      <div class="previewer-header">
+                        <div class="previewer-filename" id="preview-filename">Select a file from the tree to view its contents</div>
+                        <button class="btn btn-xs btn-outline" id="btn-copy-preview">Copy Text</button>
+                      </div>
+                      <pre class="previewer-body" id="preview-content">/* Click on any .txt file in the directory hierarchy on the left to preview simulated exam file contents */</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==============================================
+             PAGE: FULL OS LAB REPORT
+             ============================================== -->
+        <section class="page-view" id="view-report">
+          <div class="section-topbar">
+            <div>
+              <h2 class="section-title">Full OS Lab Simulation Report (CO1 – CO5)</h2>
+              <p class="section-desc">Comprehensive academic report with complete OS mappings ready for submission and evaluation</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-outline" id="btn-copy-report">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy Markdown
+              </button>
+              <button class="btn btn-primary" id="btn-print-report">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Print / Save PDF
+              </button>
+            </div>
+          </div>
+
+          <div class="card print-area">
+            <div class="card-body">
+              <div class="report-content" id="report-view-body">
+                <!-- Rendered Academic OS Report -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: STUDENT PROCESS DETAILS -->
+  <div class="modal-backdrop" id="student-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-student-title">Student Process Information</h3>
+        <button class="btn-icon modal-close" onclick="closeStudentModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-student-body">
+        <!-- Details inserted dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeStudentModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
